@@ -1,0 +1,8 @@
+.git*
+.gitignore
+rollup.config.js
+
+node_modules/
+public/
+src/
+tests/

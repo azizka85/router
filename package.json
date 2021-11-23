@@ -1,0 +1,23 @@
+{
+  "name": "@azizka/router",
+  "version": "1.0.0",
+  "description": "Browser router based on history api",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "Router",
+    "JavaScript",
+    "Browser"
+  ],
+  "author": "Aziz Kudaikulov <aziz.kudaikulov@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "rollup": "^2.60.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}
