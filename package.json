@@ -9,6 +9,14 @@
     "JavaScript",
     "Browser"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azizka85/router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azizka85/router/issues"
+  },
+  "homepage": "https://github.com/azizka85/router",
   "author": "Aziz Kudaikulov <aziz.kudaikulov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
