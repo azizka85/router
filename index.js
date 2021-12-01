@@ -67,22 +67,22 @@ class Router {
     return this;
   }
 
-  redirectTo(path, state) {
+  async redirectTo(path, state) {
     path = this.trimSlashes(path);
 
     history.replaceState(state, null, this.root + path);
 
-    this.processUri();
+    await this.processUri();
 
     return this;
   }
 
-  navigateTo(path, state) {
+  async navigateTo(path, state) {
     path = this.trimSlashes(path);
 
     history.pushState(state, null, this.root + path);
 
-    this.processUri();
+    await this.processUri();
 
     return this;
   }
@@ -142,7 +142,7 @@ class Router {
     return data;
   }
 
-  findRoute() {
+  async findRoute() {
     let fragment = this.fragment;
 
     return this.routes.some(route => {
@@ -161,11 +161,9 @@ class Router {
 
         let doBreak = this.before?.(page);
 
-        if(doBreak) {
-          return false;
+        if(!doBreak) {
+          route.handler?.(page);
         }
-
-        route.handler?.(page);
 
         return true;
       }
@@ -174,10 +172,10 @@ class Router {
     });
   }
 
-  processUri() {
+  async processUri() {
     let fragment = this.fragment;
 
-    let found = this.findRoute();
+    let found = await this.findRoute();
 
     if(!found) {
       this.page404?.(fragment);
