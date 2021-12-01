@@ -7,7 +7,7 @@ export interface Page {
 
 export interface Route {
   rule: string;
-  handler?(page: Page): void;
+  handler?(page: Page): Promise<void>;
   options: any;
 }
 

@@ -145,7 +145,9 @@ class Router {
   async findRoute() {
     let fragment = this.fragment;
 
-    return this.routes.some(route => {
+    let found = false;
+
+    for(let route of this.routes) {
       let match = fragment.match(route.rule);
 
       if(match) {
@@ -162,14 +164,16 @@ class Router {
         let doBreak = this.before?.(page);
 
         if(!doBreak) {
-          route.handler?.(page);
+          await route.handler?.(page);
         }
 
-        return true;
-      }
+        found = true;
 
-      return false;
-    });
+        break;
+      }
+    }
+
+    return found;
   }
 
   async processUri() {

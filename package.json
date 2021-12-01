@@ -1,6 +1,6 @@
 {
   "name": "@azizka/router",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Browser router based on history api",
   "main": "index.js",
   "scripts": {},
