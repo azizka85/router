@@ -16,17 +16,19 @@ describe('Router test', () => {
   });
 
   test('Should create new Router', () => {
-    const router = new Router();
+    const router = new Router({
+      root: '/root/'
+    });
 
     expect(router.fragment).toEqual('');
     expect(router.query).toEqual({});
 
-    history.pushState(null, null, '/hello/Aziz');
+    history.pushState(null, null, '/root/hello/Aziz');
 
     expect(router.fragment).toEqual('hello/Aziz');
     expect(router.query).toEqual({});
 
-    history.replaceState(null, null, '/search?firstname=Aziz&lastname=Kudaikulov');
+    history.replaceState(null, null, '/root/search?firstname=Aziz&lastname=Kudaikulov');
 
     expect(router.fragment).toEqual('search');
     expect(router.query).toEqual({
@@ -39,6 +41,7 @@ describe('Router test', () => {
     let routeCheck = false;
 
     const router = new Router({
+      root: '/root/',
       routes: [{
         rule: 'hello/(:any)',
         handler(page) {
@@ -54,15 +57,15 @@ describe('Router test', () => {
 
     expect(routeCheck).toEqual(false);
 
-    router.navigateTo('/hello/Aziz');
+    router.navigateTo('/root/hello/Aziz');
 
     expect(routeCheck).toEqual(true);
-    expect(location.pathname).toEqual('/hello/Aziz');
+    expect(location.pathname).toEqual('/root/hello/Aziz');
     expect(location.search).toEqual('');
 
     routeCheck = false;
 
-    router.redirectTo('/hello/Aziz');
+    router.redirectTo('/root/hello/Aziz');
 
     expect(routeCheck).toEqual(true);
 
@@ -93,6 +96,7 @@ describe('Router test', () => {
     let routeCheck = false;
 
     const router = new Router({
+      root: '/root/',
       routes: [{
         rule: 'search',
         handler(page) {
@@ -109,17 +113,35 @@ describe('Router test', () => {
 
     expect(routeCheck).toEqual(false);
 
-    router.navigateTo('/search?firstname=Aziz&lastname=Kudaikulov');
+    router.navigateTo('/root/search?firstname=Aziz&lastname=Kudaikulov');
 
     expect(routeCheck).toEqual(true);
-    expect(location.pathname).toEqual('/search');
+    expect(location.pathname).toEqual('/root/search');
     expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov');
 
     routeCheck = false;
 
-    router.redirectTo('/search?firstname=Aziz&lastname=Kudaikulov');
+    router.navigateTo('?firstname=Aziz&lastname=Kudaikulov&test=1');
 
     expect(routeCheck).toEqual(true);
+    expect(location.pathname).toEqual('/root/search');
+    expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov&test=1');
+
+    routeCheck = false;
+
+    router.redirectTo('/root/search?firstname=Aziz&lastname=Kudaikulov');
+
+    expect(routeCheck).toEqual(true);
+    expect(location.pathname).toEqual('/root/search');
+    expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov');
+
+    routeCheck = false;
+
+    router.redirectTo('?firstname=Aziz&lastname=Kudaikulov&test=1');
+
+    expect(routeCheck).toEqual(true);
+    expect(location.pathname).toEqual('/root/search');
+    expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov&test=1');
 
     routeCheck = false;
 

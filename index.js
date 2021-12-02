@@ -67,20 +67,20 @@ class Router {
     return this;
   }
 
-  async redirectTo(path, state) {
-    path = this.trimSlashes(path);
+  async redirectTo(url, state) {
+    const newUrl = this.transformURL(url);    
 
-    history.replaceState(state, null, this.root + path);
+    history.replaceState(state, null, this.root + newUrl);
 
     await this.processUri();
 
     return this;
   }
 
-  async navigateTo(path, state) {
-    path = this.trimSlashes(path);
+  async navigateTo(url, state) {
+    const newUrl = this.transformURL(url);   
 
-    history.pushState(state, null, this.root + path);
+    history.pushState(state, null, this.root + newUrl);
 
     await this.processUri();
 
@@ -89,6 +89,41 @@ class Router {
 
   refresh() {
     return this.redirectTo(this.fragment + location.search, history.state);
+  }
+
+  transformURL(url) {
+    if(typeof url !== 'string') {
+      return '';
+    }
+
+    const newUrl = url.trim();
+    const splits = newUrl.split('?');
+
+    let path = '';
+    let query = '';
+
+    if(splits.length === 1) {
+      path = splits[0];
+    } else {
+      path = splits[0].trim();
+      query = splits[1].trim();      
+    }    
+
+    if(!path) {
+      path = this.fragment;
+    } else {
+      if(this.root !== '/') {
+        path = path.replace(this.root, "");
+      }
+
+      path = this.trimSlashes(path);
+    }
+
+    if(!query) {
+      return path;
+    }
+
+    return `${path}?${query}`;
   }
 
   trimSlashes(path) {

@@ -37,10 +37,11 @@ export class Router {
 
   remove(param: string | ((page: Page) => void)): Router;
 
-  redirectTo(path: string, state?: any): Promise<Router>;
-  navigateTo(path: string, state?: any): Promise<Router>;
+  redirectTo(url: string, state?: any): Promise<Router>;
+  navigateTo(url: string, state?: any): Promise<Router>;
   refresh(): Promise<Router>;
 
+  transformURL(url: string): string;
   trimSlashes(path: string): string;
   parseRouteRule(route: string): RegExp;
   parseQuery(query: string): {[key: string]: any}
