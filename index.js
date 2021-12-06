@@ -178,35 +178,38 @@ class Router {
   }
 
   async findRoute() {
-    let fragment = this.fragment;
+    const fragment = this.fragment;
+    const query = this.query;
 
     let found = false;
 
-    for(let route of this.routes) {
-      let match = fragment.match(route.rule);
+    const doBreak = this.before?.({
+      fragment,
+      query
+    });
 
-      if(match) {
-        match.shift();
-
-        let query = this.query;
-        let page = {
-          fragment,
-          query,
-          match,
-          options: route.options
-        };
-
-        let doBreak = this.before?.(page);
-
-        if(!doBreak) {
-          await route.handler?.(page);
+    if(!doBreak) {
+      for(let route of this.routes) {
+        const match = fragment.match(route.rule);
+  
+        if(match) {
+          match.shift();
+          
+          const page = {
+            fragment,
+            query,
+            match,
+            options: route.options
+          };
+  
+          await route.handler?.(page);        
+  
+          found = true;
+  
+          break;
         }
-
-        found = true;
-
-        break;
-      }
-    }
+      }      
+    }    
 
     return found;
   }

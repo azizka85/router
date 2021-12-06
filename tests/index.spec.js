@@ -165,4 +165,55 @@ describe('Router test', () => {
 
     expect(routeCheck).toEqual(false);
   });
+
+  test('Should break correctly', () => {
+    let routeCheck = false;
+    let breakCheck = false;
+
+    const router = new Router({
+      root: '/root/',
+      before(page) {
+        if(page.fragment === 'break') {
+          breakCheck = page.query.firstname === 'Aziz'
+            && page.query.lastname === 'Kudaikulov';
+          
+          return true;
+        }        
+
+        return false;
+      },
+      routes: [{
+        rule: 'search',
+        handler(page) {
+          routeCheck = page.fragment === 'search'
+            && page.query.firstname === 'Aziz'
+            && page.query.lastname === 'Kudaikulov'
+            && page.options.age === 36;
+        },
+        options: {
+          age: 36
+        }
+      }]
+    });
+
+    expect(routeCheck).toEqual(false);
+    expect(breakCheck).toEqual(false);
+
+    router.navigateTo('/root/search?firstname=Aziz&lastname=Kudaikulov');
+
+    expect(routeCheck).toEqual(true);
+    expect(breakCheck).toEqual(false);
+    expect(location.pathname).toEqual('/root/search');
+    expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov');
+
+    routeCheck = false;
+    breakCheck = false;
+
+    router.navigateTo('/root/break?firstname=Aziz&lastname=Kudaikulov');
+
+    expect(routeCheck).toEqual(false);
+    expect(breakCheck).toEqual(true);
+    expect(location.pathname).toEqual('/root/break');
+    expect(location.search).toEqual('?firstname=Aziz&lastname=Kudaikulov');
+  });
 })

@@ -1,6 +1,15 @@
 const { Router } = require('../index');
 
 let router = new Router({
+  before(page) {
+    if(page.fragment === 'break' && page.query.perform) {
+      console.log('Route matching broke');
+
+      return true;
+    }
+
+    return false;
+  },
   routes: [{
     rule: '',
     handler(page) {
@@ -18,6 +27,11 @@ let router = new Router({
     }
   }, {
     rule: 'search',
+    handler(page) {
+      console.log(page);
+    }
+  }, {
+    rule: 'break',
     handler(page) {
       console.log(page);
     }

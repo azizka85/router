@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Router testing</title>
-  <script src="router-1.1.1.js"></script>
+  <script src="router-1.1.3.js"></script>
   <script>
     router.addUriListener();
 
@@ -37,8 +37,12 @@
   <br>
   <a href="/category/1/post/13" onclick="navigate(event, true)">Go to post</a>
   <br>
-  <a href="/search?firstname=Aziz&lastname=Kudaikulov" onclick="navigate(event)">Search</a>
+  <a href="/search?firstname=Aziz&lastname=Kudaikulov" onclick="navigate(event)">Search by url</a>
   <br>
-  <a href="?firstname=Aziz&lastname=Kudaikulov" onclick="navigate(event)">Search</a>
+  <a href="?firstname=Aziz&lastname=Kudaikulov" onclick="navigate(event)">Search by query</a>
+  <br>
+  <a href="/break?perform=1" onclick="navigate(event)">Break route matching</a>
+  <br>
+  <a href="/break" onclick="navigate(event)">Don't break route matching</a>
 </body>
 </html>
