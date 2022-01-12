@@ -3,4 +3,6 @@ class LocationMock {
   search = '';
 }
 
-exports.LocationMock = LocationMock;
+module.exports = {
+  LocationMock
+};

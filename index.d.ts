@@ -1,54 +1,12 @@
-export interface Page {
-  fragment: string;
-  query: {[key: string]: any};
-  match: RegExpMatchArray;
-  options: any;
-}
+export { Page } from './src/data/page';
+export { Route } from './src/data/route';
+export { RouterOptions } from './src/data/router-options';
 
-export interface Route {
-  rule: string;
-  handler?(page: Page): Promise<void>;
-  options: any;
-}
+export { Router } from './src/router';
 
-export interface RouterOptions {
-  root: string,
-  routes: Route[],
-  before?(page: Page): boolean;
-  page404?(fragment: string): void;
-}
+export { RouteNavigator } from './src/route-navigator';
 
-export class Router {
-  protected routes: Route[];
-  protected root: string;
-  protected before?(page: Page): boolean;
-  protected page404?(fragment: string): void;
+export { trimSlashes, transformURL, parseQuery, parseRouteRule } from './src/utils';
 
-  constructor(options?: RouterOptions);
-
-  get fragment(): string;
-  get query(): {[key: string]: any};
-
-  add(
-    rule: string, 
-    handler?: (page: Page) => void, 
-    options?: any
-  ): Router;
-
-  remove(param: string | ((page: Page) => void)): Router;
-
-  redirectTo(url: string, state?: any): Promise<Router>;
-  navigateTo(url: string, state?: any): Promise<Router>;
-  refresh(): Promise<Router>;
-
-  transformURL(url: string): string;
-  trimSlashes(path: string): string;
-  parseRouteRule(route: string): RegExp;
-  parseQuery(query: string): {[key: string]: any}
-  
-  findRoute(): Promise<boolean>;
-  processUri(): Promise<void>;
-
-  addUriListener(): void;
-  removeUriListener(): void;
-}
+export { LocationMock } from './src/mocks/location-mock';
+export { HistoryMock } from './src/mocks/history-mock';

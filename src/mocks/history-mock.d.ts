@@ -6,7 +6,8 @@ export class HistoryMock {
   constructor(location: LocationMock);
 
   replaceState(state: any, data: any, path: string): void;
+
   pushState(state: any, data: any, path: string): void;
 
-  protected changeLocation(path: string): void;
+  changeLocation(path: string): void;
 }

@@ -1,7 +1,7 @@
 class HistoryMock {
   location;
 
-  constructor(location) {
+  constructor(location) { 
     this.location = location;
   }
 
@@ -14,16 +14,18 @@ class HistoryMock {
   }
 
   changeLocation(path) {
-    let query = path?.split?.('?');
+    let splits = path?.split?.('?');
 
-    if(query) {
-      this.location.pathname = query[0];
+    if(splits) {
+      this.location.pathname = splits[0];
 
-      if(query.length > 1) {
-        this.location.search = '?' + query[1];
+      if(splits.length > 1) {
+        this.location.search = '?' + splits[1];
       }
     }
   }
 }
 
-exports.HistoryMock = HistoryMock;
+module.exports = {
+  HistoryMock
+};
