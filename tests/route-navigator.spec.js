@@ -20,13 +20,13 @@ describe('RouteNavigator test', () => {
     location.search = '?test=123';
   });
 
-  test('navigate to (kz|ru|en)/test', async () => {
+  test('navigate to (kz|ru|en)/test', () => {
     let success = false;
     let fragment;
     let match;
   
     const router = new Router({
-      before: async (page) => {
+      before: (page) => {
         success = false;
         match = undefined;
         fragment = page.fragment;
@@ -35,7 +35,7 @@ describe('RouteNavigator test', () => {
       },
       routes: [{
         rule: '(kz|ru|en)/test',
-        handler: async (page) => {
+        handler: (page) => {
           match = page.match;
   
           success = 
@@ -47,15 +47,15 @@ describe('RouteNavigator test', () => {
   
     const navigator = new RouteNavigator(router);  
   
-    await navigator.refresh();
+    navigator.refresh();
 
     expect(success).toBeTruthy();
 
-    await navigator.navigateTo('ru/test');
+    navigator.navigateTo('ru/test');
 
     expect(success).toBeTruthy();
 
-    await navigator.redirectTo('en/test');
+    navigator.redirectTo('en/test');
 
     expect(success).toBeTruthy();
   });

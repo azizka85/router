@@ -26,7 +26,7 @@ class RouteNavigator {
     return parseQuery(location.search);
   }
 
-  async redirectTo(url, state) {
+  redirectTo(url, state) {
     const newUrl = transformURL(url, this.fragment, this.router.rootPath);  
 
     history.replaceState(state, '', this.router.rootPath + newUrl);
@@ -34,10 +34,10 @@ class RouteNavigator {
     const currentPath = this.fragment;
     const currentQuery = this.query;
     
-    await this.router.processUrl(currentPath, currentQuery, state);
+    this.router.processUrl(currentPath, currentQuery, state);
   }
 
-  async navigateTo(url, state) {
+  navigateTo(url, state) {
     const newUrl = transformURL(url, this.fragment, this.router.rootPath);  
     
     history.pushState(state, '', this.router.rootPath + newUrl);
@@ -45,7 +45,7 @@ class RouteNavigator {
     const currentPath = this.fragment;
     const currentQuery = this.query;
     
-    await this.router.processUrl(currentPath, currentQuery, state);
+    this.router.processUrl(currentPath, currentQuery, state);
   }
 
   refresh() {

@@ -66,8 +66,8 @@ class Router {
     }
   }
 
-  async processUrl(currentPath, currentQuery, state) {
-    const doBreak = await this.before?.({
+  processUrl(currentPath, currentQuery, state) {
+    const doBreak = this.before?.({
       fragment: currentPath,
       query: currentQuery,
       state
@@ -77,7 +77,7 @@ class Router {
       const found = this.findRoute(currentPath);
 
       if(!found) {
-        await this.page404?.({
+        this.page404?.({
           fragment: currentPath,
           query: currentQuery,
           state
@@ -93,7 +93,7 @@ class Router {
           state
         };
 
-        await found.route.handler?.(page);
+        found.route.handler?.(page);
       }
     }
   }

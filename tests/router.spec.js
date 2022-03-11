@@ -1,13 +1,13 @@
 const { Router } = require('../src/router');
 
 describe('Router test', () => {
-  test('num route', async () => {
+  test('num route', () => {
     let success = false;
     let fragment;
     let match;
 
     const router = new Router({
-      before: async (page) => {
+      before: (page) => {
         success = false;
         match = undefined;
         fragment = page.fragment;
@@ -16,7 +16,7 @@ describe('Router test', () => {
       },
       routes: [{
         rule: 'test/(:num)',
-        handler: async (page) => {
+        handler: (page) => {
           match = page.match;
   
           success = 
@@ -26,22 +26,22 @@ describe('Router test', () => {
       }]
     });
   
-    await router.processUrl('test/123', {});
+    router.processUrl('test/123', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('test/123a', {});
+    router.processUrl('test/123a', {});
 
     expect(success).toBeFalsy();
   });
 
-  test('word route', async () => {
+  test('word route', () => {
     let success = false;
     let fragment;
     let match;
 
     const router = new Router({
-      before: async (page) => {
+      before: (page) => {
         success = false;
         match = undefined;
         fragment = page.fragment;
@@ -50,7 +50,7 @@ describe('Router test', () => {
       },
       routes: [{
         rule: 'test/(:word)',
-        handler: async (page) => {
+        handler: (page) => {
           match = page.match;
 
           success = 
@@ -60,22 +60,22 @@ describe('Router test', () => {
       }]
     });
 
-    await router.processUrl('test/abc', {});
+    router.processUrl('test/abc', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('test/a123', {});
+    router.processUrl('test/a123', {});
 
     expect(success).toBeFalsy();
   });
 
-  test('any route', async () => {
+  test('any route', () => {
     let success = false;
     let fragment;
     let match;
 
     const router = new Router({
-      before: async (page) => {
+      before: (page) => {
         success = false;
         match = undefined;
         fragment = page.fragment;
@@ -84,7 +84,7 @@ describe('Router test', () => {
       },
       routes: [{
         rule: 'test/(:any)',
-        handler: async (page) => {
+        handler: (page) => {
           match = page.match;
 
           success = 
@@ -94,30 +94,30 @@ describe('Router test', () => {
       }]
     });
 
-    await router.processUrl('test/abc-123', {});
+    router.processUrl('test/abc-123', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('test/abc_123', {});
+    router.processUrl('test/abc_123', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('test/abc.123', {});
+    router.processUrl('test/abc.123', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('test/$a123', {});
+    router.processUrl('test/$a123', {});
 
     expect(success).toBeFalsy();
   });
 
-  test('locale route', async () => {
+  test('locale route', () => {
     let success = false;
     let fragment;
     let match;
 
     const router = new Router({
-      before: async (page) => {
+      before: (page) => {
         success = false;
         match = undefined;
         fragment = page.fragment;
@@ -126,7 +126,7 @@ describe('Router test', () => {
       },
       routes: [{
         rule: '(kz|ru|en)/test',
-        handler: async (page) => {
+        handler: (page) => {
           match = page.match;
 
           success = 
@@ -136,19 +136,19 @@ describe('Router test', () => {
       }]
     });
 
-    await router.processUrl('kz/test', {});
+    router.processUrl('kz/test', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('ru/test', {});
+    router.processUrl('ru/test', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('en/test', {});
+    router.processUrl('en/test', {});
 
     expect(success).toBeTruthy();
 
-    await router.processUrl('bug/test', {});
+    router.processUrl('bug/test', {});
 
     expect(success).toBeFalsy();
   });

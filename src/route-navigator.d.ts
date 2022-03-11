@@ -12,9 +12,9 @@ export class RouteNavigator<RouteOptions = any, RouteState = any> {
   get fragment(): string;
   get query(): {[key: string]: string};
 
-  redirectTo(url: string, state?: RouteState): Promise<void>;
-  navigateTo(url: string, state?: RouteState): Promise<void>;
-  refresh(): Promise<void>;
+  redirectTo(url: string, state?: RouteState): void;
+  navigateTo(url: string, state?: RouteState): void;
+  refresh(): void;
 
   addUriListener(): void;
   removeUriListener(): void;

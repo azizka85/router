@@ -5,8 +5,8 @@ import { RouterOptions } from './data/router-options';
 export class Router<RouteOptions = any, RouteState = any> {
   protected routes: Route<RouteOptions, RouteState>[];
   protected root: string;
-  protected before?(page: Page<RouteOptions, RouteState>): Promise<boolean>;
-  protected page404?(page: Page<RouteOptions, RouteState>): Promise<void>;
+  protected before?(page: Page<RouteOptions, RouteState>): boolean;
+  protected page404?(page: Page<RouteOptions, RouteState>): void;
 
   constructor(options?: RouterOptions<RouteOptions, RouteState>);
 
@@ -16,12 +16,12 @@ export class Router<RouteOptions = any, RouteState = any> {
 
   add(
     rule: string | RegExp, 
-    handler?: (page: Page<RouteOptions, RouteState>) => Promise<void>, 
+    handler?: (page: Page<RouteOptions, RouteState>) => void, 
     options?: RouteOptions
   ): Router;
 
   remove(
-    param: string | RegExp | ((page: Page<RouteOptions, RouteState>) => Promise<void>)
+    param: string | RegExp | ((page: Page<RouteOptions, RouteState>) => void)
   ): Router;
 
   findRoute(currentPath: string): {
@@ -33,5 +33,5 @@ export class Router<RouteOptions = any, RouteState = any> {
     currentPath: string, 
     currentQuery: { [key: string]: string }, 
     state?: RouteState
-  ): Promise<void>;  
+  ): void;  
 }
