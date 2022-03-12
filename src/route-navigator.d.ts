@@ -1,7 +1,7 @@
 import { Router } from './router';
 
 export class RouteNavigator<RouteOptions = any, RouteState = any> {
-  protected router: Router<RouteOptions, RouteState>
+  protected router: Router<RouteOptions, RouteState>;
 
   protected popStateHandler: () => void;
 
