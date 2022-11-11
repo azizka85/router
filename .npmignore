@@ -2,6 +2,8 @@
 .git*
 .gitignore
 
+.idea
+
 jsconfig.json
 
 node_modules/
