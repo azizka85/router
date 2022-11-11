@@ -17,5 +17,9 @@
   },
   "homepage": "https://github.com/azizka85/router",
   "author": "Aziz Kudaikulov <aziz.kudaikulov@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "jsdom": "^20.0.2"
+  }
 }
