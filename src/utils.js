@@ -1,7 +1,19 @@
+/**
+ * Remove slashes from the begin and end of the path
+ * @param {string} path 
+ * @returns {string}
+ */
 function trimSlashes(path) {
   return path.replace(/\/$/, '').replace(/^\//, '');
 }
 
+/**
+ * Transform url for Router class
+ * @param {string} url 
+ * @param {string} currentPath 
+ * @param {string} root 
+ * @returns {string}
+ */
 function transformURL(url, currentPath, root) {
   const newUrl = url.trim();
   const splits = newUrl.split('?');
@@ -26,6 +38,11 @@ function transformURL(url, currentPath, root) {
   return `${path}?${query}`;
 }
 
+/**
+ * Parse the query string and return a dictionary
+ * @param {string} query 
+ * @returns {{[key: string]: string}}
+ */
 function parseQuery(query) {
   const data = {};
 
@@ -49,6 +66,11 @@ function parseQuery(query) {
   return data;    
 }
 
+/**
+ * Parse the route string and return RegExp
+ * @param {string | RegExp} route 
+ * @returns {RegExp}
+ */
 function parseRouteRule(route) {
   if(typeof route === 'string') {
     const uri = trimSlashes(route);

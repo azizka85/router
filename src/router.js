@@ -1,11 +1,35 @@
 const { trimSlashes, parseRouteRule } = require('./utils');
 
+/**
+ * Router class to process routes
+ * @template RouteOptions
+ * @template RouteState
+ */
 class Router {
+  /**
+   * @type {import('./data/route').Route<RouteOptions, RouteState>[]}
+   * @protected
+   */
   routes = [];
+  /**
+   * @type {string}
+   * @protected
+   */
   root = '/';
+  /**
+   * @type {((page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<boolean>) | undefined}
+   * @protected
+   */
   before;
+  /**
+   * @type {((page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>) | undefined}
+   * @protected
+   */
   page404;
 
+  /**
+   * @param {import('./data/router-options').RouterOptions<RouteOptions, RouteState> | undefined} options 
+   */
   constructor(options) {
     this.before = options?.before;
     this.page404 = options?.page404;
@@ -19,16 +43,31 @@ class Router {
     }
   }
 
+  /**
+   * Get root path
+   * @returns {string}
+   */
   get rootPath() {
     return this.root;
   }
 
+  /**
+   * Add routes to the router
+   * @param {import('./data/route').Route<RouteOptions, RouteState>[]} routes 
+   */
   addRoutes(routes) {
     for(const route of routes) {
       this.add(route.rule, route.handler, route.options);
     }
   }
 
+  /**
+   * Add route to the router
+   * @param {string | RegExp} rule 
+   * @param {((page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>) | undefined} handler 
+   * @param {RouteOptions | undefined} options 
+   * @returns {Router<RouteOptions, RouteState>}
+   */
   add(rule, handler, options) {
     this.routes.push({
       rule: parseRouteRule(rule),
@@ -39,6 +78,11 @@ class Router {
     return this;
   }
 
+  /**
+   * Remove route from the router
+   * @param {string | RegExp | ((page: Page<RouteOptions, RouteState>) => Promise<void>)} param 
+   * @returns {Router<RouteOptions, RouteState>}
+   */
   remove(param) {
     this.routes.some((route, i) => {
       if(route.handler === param || route.rule === parseRouteRule(param)) {
@@ -53,6 +97,11 @@ class Router {
     return this;
   } 
 
+  /**
+   * Find route by path
+   * @param {string} currentPath 
+   * @returns { {match: RegExpMatchArray, route: import('./data/route').Route<RouteOptions, RouteState>} | undefined }
+   */
   findRoute(currentPath) {    
     for(const route of this.routes) {
       const match = currentPath.match(route.rule);
@@ -66,6 +115,12 @@ class Router {
     }
   }
 
+  /**
+   * Find route for the current path and execute handler
+   * @param {string} currentPath 
+   * @param {{ [key: string]: string }} currentQuery 
+   * @param {RouteState | undefined} state 
+   */
   async processUrl(currentPath, currentQuery, state) {
     const doBreak = await this.before?.({
       fragment: currentPath,
