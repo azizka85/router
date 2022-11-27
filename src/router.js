@@ -80,7 +80,7 @@ class Router {
 
   /**
    * Remove route from the router
-   * @param {string | RegExp | ((page: Page<RouteOptions, RouteState>) => Promise<void>)} param 
+   * @param {string | RegExp | ((page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>)} param 
    * @returns {Router<RouteOptions, RouteState>}
    */
   remove(param) {
