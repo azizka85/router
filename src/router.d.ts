@@ -7,7 +7,7 @@ export class Router<RouteOptions, RouteState> {
     /**
      * @param {import('./data/router-options').RouterOptions<RouteOptions, RouteState> | undefined} options
      */
-    constructor(options: import('./data/router-options').RouterOptions<RouteOptions, RouteState> | undefined);
+    constructor(options?: import('./data/router-options').RouterOptions<RouteOptions, RouteState> | undefined);
     /**
      * @type {import('./data/route').Route<RouteOptions, RouteState>[]}
      * @protected
@@ -45,7 +45,7 @@ export class Router<RouteOptions, RouteState> {
      * @param {RouteOptions | undefined} options
      * @returns {Router<RouteOptions, RouteState>}
      */
-    add(rule: string | RegExp, handler: (page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>, options: RouteOptions | undefined): Router<RouteOptions, RouteState>;
+    add(rule: string | RegExp, handler?: (page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>, options?: RouteOptions | undefined): Router<RouteOptions, RouteState>;
     /**
      * Remove route from the router
      * @param {string | RegExp | ((page: import('./data/page').Page<RouteOptions, RouteState>) => Promise<void>)} param
@@ -69,5 +69,5 @@ export class Router<RouteOptions, RouteState> {
      */
     processUrl(currentPath: string, currentQuery: {
         [key: string]: string;
-    }, state: RouteState | undefined): Promise<void>;
+    }, state?: RouteState | undefined): Promise<void>;
 }

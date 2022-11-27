@@ -30,7 +30,7 @@ class Router {
   /**
    * @param {import('./data/router-options').RouterOptions<RouteOptions, RouteState> | undefined} options 
    */
-  constructor(options) {
+  constructor(options = undefined) {
     this.before = options?.before;
     this.page404 = options?.page404;
 
@@ -68,7 +68,7 @@ class Router {
    * @param {RouteOptions | undefined} options 
    * @returns {Router<RouteOptions, RouteState>}
    */
-  add(rule, handler, options) {
+  add(rule, handler = undefined, options = undefined) {
     this.routes.push({
       rule: parseRouteRule(rule),
       handler,
@@ -121,7 +121,7 @@ class Router {
    * @param {{ [key: string]: string }} currentQuery 
    * @param {RouteState | undefined} state 
    */
-  async processUrl(currentPath, currentQuery, state) {
+  async processUrl(currentPath, currentQuery, state = undefined) {
     const doBreak = await this.before?.({
       fragment: currentPath,
       query: currentQuery,
